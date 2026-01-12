@@ -11,9 +11,9 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		D9BAC1AE2F041F3A006A41E1 /* NEW Spotify ASL */ = {
+		D9BAC1AE2F041F3A006A41E1 /* Spotify ASL */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "NEW Spotify ASL";
+			path = "Spotify ASL";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -32,7 +32,7 @@
 		D9BAC1A32F041F3A006A41E1 = {
 			isa = PBXGroup;
 			children = (
-				D9BAC1AE2F041F3A006A41E1 /* NEW Spotify ASL */,
+				D9BAC1AE2F041F3A006A41E1 /* Spotify ASL */,
 				D9BAC1AD2F041F3A006A41E1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -61,7 +61,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				D9BAC1AE2F041F3A006A41E1 /* NEW Spotify ASL */,
+				D9BAC1AE2F041F3A006A41E1 /* Spotify ASL */,
 			);
 			name = "NEW Spotify ASL";
 			packageProductDependencies = (
@@ -85,7 +85,7 @@
 					};
 				};
 			};
-			buildConfigurationList = D9BAC1A72F041F3A006A41E1 /* Build configuration list for PBXProject "NEW Spotify ASL" */;
+			buildConfigurationList = D9BAC1A72F041F3A006A41E1 /* Build configuration list for PBXProject "Spotify ASL" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -309,7 +309,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D9BAC1A72F041F3A006A41E1 /* Build configuration list for PBXProject "NEW Spotify ASL" */ = {
+		D9BAC1A72F041F3A006A41E1 /* Build configuration list for PBXProject "Spotify ASL" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D9BAC1B52F041F3C006A41E1 /* Debug */,

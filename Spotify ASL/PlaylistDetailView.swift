@@ -60,14 +60,24 @@ struct PlaylistDetailView: View {
                                 .font(.system(size: 28, weight: .bold))
                                 .foregroundColor(.white)
                             
-                            Text("Walking music picked just for you")
+                            Text("All vibes. No sound required.")
                                 .font(.system(size: 14))
                                 .foregroundColor(Color(white: 0.7))
                             
                             HStack(spacing: 6) {
-                                Image(systemName: "spotify.logo")
-                                    .font(.system(size: 18))
-                                    .foregroundColor(Color(red: 0.11, green: 0.84, blue: 0.38))
+                                // Use asset-based spotify-logo to match other screens
+                                if UIImage(named: "spotify-logo") != nil {
+                                    Image("spotify-logo")
+                                        .resizable()
+                                        .renderingMode(.template)
+                                        .foregroundColor(Color(red: 0.11, green: 0.84, blue: 0.38))
+                                        .frame(width: 16, height: 16)
+                                } else {
+                                    // Fallback to SF Symbol if asset missing
+                                    Image(systemName: "spotify.logo")
+                                        .font(.system(size: 16))
+                                        .foregroundColor(Color(red: 0.11, green: 0.84, blue: 0.38))
+                                }
                                 
                                 Text("Made for pra5a")
                                     .font(.system(size: 12, weight: .bold))
@@ -150,15 +160,15 @@ struct PlaylistDetailView: View {
                                 }
 
                             // Song 3
-                            SongListRow(title: "CHANEL", artist: "Tyla", image: "afrobeats-mix", isExplicit: true)
+                            SongListRow(title: "CHANEL", artist: "Tyla", image: "chanel-tyla", isExplicit: true)
                                 .onTapGesture {
-                                    updatePlayer(title: "CHANEL", artist: "Tyla", image: "afrobeats-mix")
+                                    updatePlayer(title: "CHANEL", artist: "Tyla", image: "chanel-tyla")
                                 }
 
                             // Song 4
-                            SongListRow(title: "Tonight I Might", artist: "KATSEYE", image: "katseye-mix", isExplicit: true)
+                            SongListRow(title: "Tonight I Might", artist: "KATSEYE", image: "sis-katseye", isExplicit: true)
                                 .onTapGesture {
-                                    updatePlayer(title: "Tonight I Might", artist: "KATSEYE", image: "katseye-mix")
+                                    updatePlayer(title: "Tonight I Might", artist: "KATSEYE", image: "sis-katseye")
                                 }
                             
                             // Song 5: NOT LIKE US (tap updates the Floating Player)
@@ -209,19 +219,11 @@ struct PlaylistDetailView: View {
                 .background(Color(red: 0.2, green: 0.2, blue: 0.2))
                 .cornerRadius(6)
                 .padding(.horizontal, 8)
-                .padding(.bottom, 4)
+                .padding(.bottom, 6)
                 
-                // Tab Bar
-                HStack {
-                    TabBarItem(icon: "house.fill", text: "Home", isSelected: true)
-                    TabBarItem(icon: "magnifyingglass", text: "Search", isSelected: false)
-                    TabBarItem(icon: "books.vertical.fill", text: "Your Library", isSelected: false)
-                    TabBarItem(icon: "spotify.logo", text: "Premium", isSelected: false)
-                    TabBarItem(icon: "plus", text: "Create", isSelected: false)
-                }
-                .padding(.top, 10)
-                .padding(.bottom, 30)
-                .background(Color.black.opacity(0.95))
+                // Custom Tab Bar overlay (visual only; Home selected)
+                CustomTabBar(selected: .home)
+                    .background(Color.black.opacity(0.95))
             }
         }
         .navigationBarHidden(true)
@@ -281,22 +283,54 @@ struct SongListRow: View {
     }
 }
 
-struct TabBarItem: View {
-    var icon: String
-    var text: String
-    var isSelected: Bool
-    
+// MARK: - Custom Tab Bar for Playlist Screen
+
+enum TabSelection {
+    case home, search, library, premium, create
+}
+
+struct CustomTabBar: View {
+    var selected: TabSelection
+
     var body: some View {
-        VStack(spacing: 4) {
-            Image(systemName: icon)
-                .font(.system(size: 24))
-                .foregroundColor(isSelected ? .white : .gray)
-            
-            Text(text)
+        HStack(spacing: 0) {
+            CustomTabBarItem(icon: "house.fill", title: "Home", isSelected: selected == .home)
+            CustomTabBarItem(icon: "magnifyingglass", title: "Search", isSelected: selected == .search)
+            CustomTabBarItem(icon: "books.vertical.fill", title: "Your Library", isSelected: selected == .library)
+            CustomTabBarItem(icon: "star.fill", title: "Premium", isSelected: selected == .premium)
+            CustomTabBarItem(icon: "plus", title: "Create", isSelected: selected == .create)
+        }
+        .padding(.horizontal, 8)
+        .padding(.top, 8)
+        .padding(.bottom, 30) // space above home indicator
+        .background(Color.black.opacity(0.95))
+    }
+}
+
+struct CustomTabBarItem: View {
+    let icon: String
+    let title: String
+    let isSelected: Bool
+
+    var body: some View {
+        VStack(spacing: 6) {
+            ZStack {
+                if isSelected {
+                    // Rounded “pill” behind the icon to match screenshot
+                    Capsule()
+                        .fill(Color(white: 0.2))
+                        .frame(width: 52, height: 40)
+                }
+                Image(systemName: icon)
+                    .font(.system(size: 22, weight: .semibold))
+                    .foregroundColor(.white)
+            }
+            Text(title)
                 .font(.caption2)
-                .foregroundColor(isSelected ? .white : .gray)
+                .foregroundColor(.white)
         }
         .frame(maxWidth: .infinity)
+        .contentShape(Rectangle())
     }
 }
 

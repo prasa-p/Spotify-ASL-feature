@@ -15,8 +15,8 @@ struct SpotifyHomeView: View {
     }
 
     var body: some View {
-        NavigationStack {
-            TabView {
+        TabView {
+            NavigationStack {
                 ZStack(alignment: .bottom) {
                     // Background
                     Color.black.ignoresSafeArea()
@@ -35,14 +35,13 @@ struct SpotifyHomeView: View {
                                 RecentCard(title: "Tamil Mix", imageName: "tamil-mix")
                                 
                                 // Row 2
-                                // Make Deafinitely Vibin' navigable
                                 NavigationLink {
                                     PlaylistDetailView()
                                         .navigationBarBackButtonHidden(true)
                                 } label: {
                                     RecentCard(title: "Deafinitely Vibin'", imageName: "deafinately-vibing")
                                 }
-                                .buttonStyle(.plain) // preserve card look without link highlight
+                                .buttonStyle(.plain)
                                 
                                 RecentCard(title: "Your Top Songs 2025", imageName: "top-songs-2025")
                                 
@@ -66,25 +65,21 @@ struct SpotifyHomeView: View {
                                 
                                 ScrollView(.horizontal, showsIndicators: false) {
                                     HStack(spacing: 16) {
-                                        // Mix 1: 2010s
                                         MixCardView(
                                             imageName: "2010s-mix",
                                             description: "Rihanna, The Weeknd, Anirudh Ravichander..."
                                         )
                                         
-                                        // Mix 2: Ariana Grande
                                         MixCardView(
                                             imageName: "ariana-grande-mix",
                                             description: "KATSEYE, Madison Beer and Tate McRae"
                                         )
                                         
-                                        // Mix 3: Katseye
                                         MixCardView(
                                             imageName: "katseye-mix",
                                             description: "KATSEYE, Le Sserafim..."
                                         )
                                         
-                                        // Daily Mix 1 at the end
                                         MixCardView(
                                             imageName: "daily-mix1",
                                             description: "Your personalized mix"
@@ -103,7 +98,6 @@ struct SpotifyHomeView: View {
                                     .padding(.horizontal)
                                     .fixedSize(horizontal: false, vertical: true)
                                 
-                                // Replaced placeholders with images
                                 ScrollView(.horizontal, showsIndicators: false) {
                                     HStack(spacing: 16) {
                                         Image("daylight")
@@ -134,25 +128,33 @@ struct SpotifyHomeView: View {
                         .padding(.top)
                     }
                     
-                    // 5. Floating Player Overlay
+                    // 5. Floating Player Overlay (stays while navigating)
                     VStack {
                         Spacer()
                         FloatingPlayerView()
                             .padding(.bottom, 4)
                     }
                 }
-                .tabItem {
-                    Label("Home", systemImage: "house.fill")
-                }
-                
-                // Other Tabs
-                Text("Search").tabItem { Label("Search", systemImage: "magnifyingglass") }
-                Text("Library").tabItem { Label("Your Library", systemImage: "books.vertical.fill") }
-                Text("Premium").tabItem { Label("Premium", systemImage: "star.fill") }
-                Text("Create").tabItem { Label("Create", systemImage: "plus") }
             }
-            .accentColor(.white)
+            .tabItem {
+                Label("Home", systemImage: "house.fill")
+            }
+            
+            Text("Search")
+                .tabItem { Label("Search", systemImage: "magnifyingglass") }
+            
+            Text("Your Library")
+                .tabItem { Label("Your Library", systemImage: "books.vertical.fill") }
+            
+            Text("Premium")
+                .tabItem { Label("Premium", systemImage: "star") }
+            
+            Text("Create")
+                .tabItem { Label("Create", systemImage: "plus") }
         }
+        .accentColor(.white) // white icons on black
+        .toolbarBackground(.visible, for: .tabBar)
+        .toolbarBackground(Color.black, for: .tabBar)
     }
 }
 
@@ -214,7 +216,6 @@ struct RecentCard: View {
     
     var body: some View {
         HStack {
-            // Logic: If image asset exists, use it. Else use color.
             if let name = imageName {
                 Image(name)
                     .resizable()
@@ -252,7 +253,6 @@ struct MixCardView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            // Square Image Area
             ZStack(alignment: .bottomLeading) {
                 if let name = imageName {
                     Image(name)
@@ -283,7 +283,6 @@ struct MixCardView: View {
                 }
             }
             
-            // Description Text
             Text(description)
                 .font(.system(size: 13))
                 .foregroundColor(.gray)
@@ -301,7 +300,6 @@ struct FloatingPlayerView: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack {
-                // Album Art
                 Image("jennie-ruby")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
@@ -322,22 +320,19 @@ struct FloatingPlayerView: View {
                 
                 Spacer()
                 
-                // Device Icon
                 Image(systemName: "hifispeaker.2")
                     .foregroundColor(.white)
                     .font(.subheadline)
                     .padding(.trailing, 16)
                 
-                // Play Button
                 Image(systemName: "play.fill")
                     .font(.title3)
                     .foregroundColor(.white)
                     .padding(.trailing, 16)
             }
             .frame(height: 56)
-            .background(Color(red: 0.35, green: 0.05, blue: 0.05)) // Deep Red
+            .background(Color(red: 0.35, green: 0.05, blue: 0.05))
             
-            // Progress Bar
             GeometryReader { geo in
                 ZStack(alignment: .leading) {
                     Rectangle()

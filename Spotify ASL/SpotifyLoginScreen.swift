@@ -208,33 +208,36 @@ struct SocialLoginButton: View {
 
     var body: some View {
         Button(action: {}) {
-            HStack(spacing: 12) {
-                if isSystemIcon {
-                    Image(systemName: iconName)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 20, height: 20)
-                        .foregroundColor(.white)
-                } else {
-                    Image(iconName) // Uses Assets
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 20, height: 20)
-                }
+            // Use an overlay with a centered HStack so the tappable area remains full width
+            Text("") // Invisible base to keep frame
+                .frame(maxWidth: .infinity)
+                .padding()
+                .overlay(
+                    HStack(spacing: 12) {
+                        if isSystemIcon {
+                            Image(systemName: iconName)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 20, height: 20)
+                                .foregroundColor(.white)
+                        } else {
+                            Image(iconName) // Uses Assets
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 20, height: 20)
+                        }
 
-                Text(text)
-                    .font(.headline)
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-
-                Spacer()
-            }
-            .frame(maxWidth: .infinity)
-            .padding()
-            .overlay(
-                RoundedRectangle(cornerRadius: 30)
-                    .stroke(Color.gray.opacity(0.6), lineWidth: 1)
-            )
+                        Text(text)
+                            .font(.headline)
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .center)
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 30)
+                        .stroke(Color.gray.opacity(0.6), lineWidth: 1)
+                )
         }
     }
 }
